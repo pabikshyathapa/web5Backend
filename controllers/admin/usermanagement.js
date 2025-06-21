@@ -94,6 +94,7 @@ exports.getOneUser = async (req, res) => {
             { "success": false, "message": "Server error" }
         )
     }
+    
 }
 
 // 4 Update one
