@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema(
             required: true
         },
         // task make a multer to storage product image 
-        productImage: { type: String }
+        filepath: { type: String }
     }
 )
 

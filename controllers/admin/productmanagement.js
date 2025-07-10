@@ -10,7 +10,7 @@ exports.createProduct = async (req, res) => {
         });
     }
 
-    const imagePath = req.file ? req.file.filename : "";
+    const filepath = req.file ? req.file.filename : "";
 
     try {
         const product = new Product({
@@ -18,7 +18,7 @@ exports.createProduct = async (req, res) => {
             price,
             categoryId,
             sellerId: userId,
-            productImage: imagePath,
+            productImage: filepath,
         });
 
         await product.save();
