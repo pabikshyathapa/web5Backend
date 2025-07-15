@@ -10,6 +10,8 @@ const adminUserRoutes = require("./routes/admin/userRouteAdmin")
 const adminCategoryRoutes = require("./routes/admin/categoryRouteAdmin")
 const adminProductRoutes = require("./routes/admin/productRouteAdmin")
 const adminRoutes=require('./routes/admin/AdminRoute')
+const publicRoutes = require('./routes/publicRoutes')
+
 
 let corsOptions = {
     origin: "*" // or list of domain to whitelist
@@ -39,6 +41,9 @@ app.use("/api/admin/users", adminUserRoutes)
 app.use("/api/admin/category", adminCategoryRoutes)
 app.use("/api/admin/product", adminProductRoutes)
 app.use("/api/admins", adminRoutes)
+app.use("/api",publicRoutes)
+
+// module.exports=app
 
 
 
