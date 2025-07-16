@@ -29,7 +29,7 @@ const userRoute = require('./routes/userRoutes')
 app.use('/api/auth', userRoute);
 app.listen(
     5050, //port -> localhost:5050
-    () => {
+    () => { 
         console.log("Server started")
     }
 )
