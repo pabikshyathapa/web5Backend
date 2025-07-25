@@ -11,13 +11,14 @@ const adminCategoryRoutes = require("./routes/admin/categoryRouteAdmin")
 const adminProductRoutes = require("./routes/admin/productRouteAdmin")
 const adminRoutes=require('./routes/admin/AdminRoute')
 const publicRoutes = require('./routes/publicRoutes')
-
-
+const cartRoutes=require('./routes/cartRoute')
+const wishlistRoutes=require('./routes/wishlistRoutes')
+const orderRoutes=require('./routes/oderRoute')
+const searchRoutes=require('./routes/serachRoutes')
 let corsOptions = {
     origin: "*" // or list of domain to whitelist
 }
 app.use(cors(corsOptions))
-
 app.use(express.json());
 app.use(cors());
 
@@ -28,7 +29,7 @@ const PORT = process.env.PORT
 const userRoute = require('./routes/userRoutes')
 app.use('/api/auth', userRoute);
 app.listen(
-    5050, //port -> localhost:5050
+    5050, //port -> localhost:5050  
     () => { 
         console.log("Server started")
     }
@@ -42,6 +43,10 @@ app.use("/api/admin/category", adminCategoryRoutes)
 app.use("/api/admin/product", adminProductRoutes)
 app.use("/api/admins", adminRoutes)
 app.use("/api",publicRoutes)
+app.use("/api/cart",cartRoutes)
+app.use("/api/wishlist",wishlistRoutes)
+app.use("/api/order",orderRoutes)
+app.use("/api/search-products",searchRoutes)
 
 // module.exports=app
 

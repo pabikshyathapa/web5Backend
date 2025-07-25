@@ -99,29 +99,41 @@ exports.getOneUser = async (req, res) => {
 
 // 4 Update one
 exports.updateOne = async (req, res) => {
-    const { firstName, lastName } = req.body
-    const _id = req.params.id // mongodb id
-    try{
-        const user = await User.updateOne(
-            {
-                "_id": _id
-            },
-            {
-                $set : {
-                    "firstName": firstName,
-                    "lastName": lastName
-                }
-            }
-        )
-        return res.status(200).json(
-            { "success": true, "message": "User updated"}
-        )
-    }catch(err){
-        return res.status(500).json(
-            { "success": false, "message": "Server error" }
-        )
+  const { name, email, phone, filepath } = req.body;
+  const _id = req.params.id; // mongodb id
+
+  try {
+    // Build the update object only with fields provided
+    const updateFields = {};
+    if (name !== undefined) updateFields.name = name;
+    if (email !== undefined) updateFields.email = email;
+    if (phone !== undefined) updateFields.phone = phone;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      { $set: updateFields },
+      { new: true } // return the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
     }
-}
+
+    return res.status(200).json({
+      success: true,
+      message: "User updated",
+      data: updatedUser, // return updated user
+    });
+  } catch (err) {
+    console.error("Update user error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: err.message,
+    });
+  }
+};
+
 
 // 5 Delete One
 exports.deleteOne = async (req, res) => {
