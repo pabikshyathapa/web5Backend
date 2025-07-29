@@ -39,7 +39,7 @@ describe("Auth: Register & Login", () => {
       .send(validUser);
 
     expect(res.statusCode).toBe(201);
-    expect(res.body.succes).toBe(true); // Note: your controller sends `succes` instead of `success`
+    expect(res.body.success).toBe(true); // Note: your controller sends `succes` instead of `success`
     expect(res.body.message).toBe("User Registered");
   });
 
