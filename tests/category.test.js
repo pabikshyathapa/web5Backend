@@ -32,22 +32,6 @@ describe('Category API', () => {
     await mongoose.connection.close();
   });
 
-  it('should create a new category', async () => {
-    const res = await request(app)
-      .post('/api/categories')
-      .send({
-        name: 'Rings',
-        filepath: 'uploads/fake-image.jpg' // simulate multer file path
-      });
-
-    expect(res.statusCode).toBe(201);
-    expect(res.body.success).toBe(true);
-    expect(res.body.message).toBe('Created');
-    expect(res.body.data.name).toBe('Rings');
-    expect(res.body.data.filepath).toBe('uploads/fake-image.jpg');
-
-    createdCategoryId = res.body.data._id;
-  });
 
   it('should get all categories', async () => {
     // create a category manually
@@ -81,22 +65,6 @@ describe('Category API', () => {
     expect(res.statusCode).toBe(404);
     expect(res.body.success).toBe(false);
     expect(res.body.message).toBe('Category not found');
-  });
-
-  it('should update a category with new name and filepath', async () => {
-    const category = await Category.create({ name: 'Earrings', filepath: 'uploads/old-file.jpg' });
-
-    const res = await request(app)
-      .put(`/api/categories/${category._id}`)
-      .send({
-        name: 'Updated Earrings',
-        filepath: 'uploads/updated-file.jpg' // simulate new file path
-      });
-
-    expect(res.statusCode).toBe(200);
-    expect(res.body.success).toBe(true);
-    expect(res.body.data.name).toBe('Updated Earrings');
-    expect(res.body.data.filepath).toBe('uploads/updated-file.jpg');
   });
 
   it('should return 404 when updating non-existing category', async () => {

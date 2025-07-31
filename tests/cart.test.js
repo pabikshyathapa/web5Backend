@@ -139,4 +139,63 @@ describe('Cart API', () => {
     expect(Array.isArray(res.body.data)).toBe(true);
     expect(res.body.data.length).toBeGreaterThan(0);
   });
+
+  it('should return 404 when fetching cart for non-existent user', async () => {
+    const fakeUserId = new mongoose.Types.ObjectId();
+    const res = await request(app).get(`/api/cart/${fakeUserId}`);
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body.success).toBe(false);
+    expect(res.body.message).toBe('Cart not found');
+  });
+    it('should increase quantity if product already exists in cart', async () => {
+    await Cart.create({
+      userId,
+      products: [{ productId, name: 'Gold Ring', price: 100, quantity: 2, filepath: 'image.jpg' }]
+    });
+
+    const res = await request(app)
+      .post('/api/cart')
+      .send({
+        userId,
+        productId,
+        name: 'Gold Ring',
+        price: 100,
+        quantity: 3,
+        filepath: 'image.jpg'
+      });
+
+    expect(res.statusCode).toBe(201);
+    expect(res.body.success).toBe(true);
+    expect(res.body.message).toBe('Product added to cart');
+
+    const updatedQuantity = res.body.data.products.find(p => p.productId === String(productId)).quantity;
+    expect(updatedQuantity).toBe(5); // 2 + 3
+  });
+  it('should return 404 when updating a non-existent cart', async () => {
+  const res = await request(app)
+    .put('/api/cart')
+    .send({
+      userId,
+      productId,
+      quantity: 10,
+    });
+
+  expect(res.statusCode).toBe(404);
+  expect(res.body.success).toBe(false);
+  expect(res.body.message).toBe('Cart not found');
+});
+it('should return 404 when removing item from non-existent cart', async () => {
+  const res = await request(app)
+    .delete('/api/cart')
+    .send({
+      userId,
+      productId,
+    });
+
+  expect(res.statusCode).toBe(404);
+  expect(res.body.success).toBe(false);
+  expect(res.body.message).toBe('Cart not found');
+});
+
 });

@@ -56,3 +56,12 @@ exports.removeFromWishlist = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server Error' });
   }
 };
+
+exports.getAllWishlists = async (req, res) => {
+  try {
+    const wishlists = await Wishlist.find();
+    res.status(200).json({ success: true, data: wishlists });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server Error' });
+  }
+};

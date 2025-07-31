@@ -101,4 +101,18 @@ exports.getAllCartItems = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+// controllers/cartController.js
+
+exports.clearAllCarts = async (req, res) => {
+  try {
+    // Remove all cart documents from the collection
+    await Cart.deleteMany({});
+
+    return res.json({ success: true, message: "All cart data cleared successfully." });
+  } catch (error) {
+    console.error("Error clearing all carts:", error);
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
 
