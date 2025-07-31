@@ -46,7 +46,9 @@ app.use("/api",publicRoutes)
 app.use("/api/cart",cartRoutes)
 app.use("/api/wishlist",wishlistRoutes)
 app.use("/api/order",orderRoutes)
+
 app.use("/api/search-products",searchRoutes)
+
 
 // module.exports=app
 
