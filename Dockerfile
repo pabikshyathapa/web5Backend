@@ -15,6 +15,7 @@ COPY . .
 #Docker port
 EXPOSE 2000
 
+
 #Entry point
 CMD ["node","server.js"]
 
