@@ -16,6 +16,7 @@ mongoose.connect('mongodb://localhost:27017/jewelme', {
   } catch (err) {
     console.error('Error creating admin:', err);
   } finally {
+    
     mongoose.connection.close();
   }
 })();
