@@ -11,11 +11,8 @@ RUN npm install
 
 #Copy rest of the source code
 COPY . .
-
 #Docker port
 EXPOSE 2000
-
-
 #Entry point
 CMD ["node","server.js"]
 
